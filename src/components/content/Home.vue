@@ -37,9 +37,47 @@
               </v-row>
             </v-container>
           </v-card>
+
+          <button v-on:click="show" class="button">show!</button>
+          <modal name="hello-world" 
+            :maxWidth="3000"
+            :maxHeight="3000"
+            :draggable="false"
+            :resizable="false">
+            <div class="modal-header">
+              <h2>Modal title</h2>
+            </div>
+            <div class="modal-body">
+              <img src="http://up.gc-img.net/post_img/2014/01/WzyQNqaspyT33CI_MINaP_33.jpeg" />
+              <p>you're reading this text in a modal!</p>
+              <button v-on:click="hide">閉じる</button>
+            </div>  
+          </modal>
+
         </v-col>
       </v-row>
     </v-container>
   </v-main>
 </template>
 
+<script>
+export default {
+  methods: {
+    show : function() {
+      this.$modal.show('hello-world');
+    },
+    hide : function () {
+      this.$modal.hide('hello-world');
+    },
+  },
+}
+</script>
+
+<style>
+.modal-header, .modal-body {
+  padding: 5px 25px;
+}
+.modal-header {
+  border-bottom: 1px solid #ddd;
+}
+</style>
