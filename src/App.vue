@@ -4,22 +4,17 @@
       v-model="drawer"
       app
     >
-      <!-- TODO: 美しく... -->
       <v-list dense >
-        <v-list-item link v-on:click="clickList(config.type.HOME)">
+        <v-list-item
+          v-for="o in config.init"
+          :key="o"
+          link
+          v-on:click="clickList(o)">
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>{{o.icon}}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link v-on:click="clickList(config.type.MOVIE)">
-          <v-list-item-action>
-            <v-icon>mdi-video</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Movie</v-list-item-title>
+            <v-list-item-title>{{o.title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -31,11 +26,11 @@
         dark
       >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>息子との思い出</v-toolbar-title>
+      <v-toolbar-title>{{current.title}}</v-toolbar-title>
     </v-app-bar>
 
-    <Home v-if="type == config.type.HOME"></Home>
-    <Movie v-if="type == config.type.MOVIE"></Movie>
+    <Home v-if="current.type == config.type.HOME"></Home>
+    <Movie v-if="current.type == config.type.MOVIE"></Movie>
 
     <Footer></Footer>
   </v-app>
@@ -59,11 +54,11 @@ export default {
   data: () => ({
     drawer: null,
     config: config,
-    type: config.type.HOME
+    current: config.init[0],
   }),
   methods: {
-    clickList: function(t) {
-      this.type = t
+    clickList: function(o) {
+      this.current = o
     }
   },
 }
