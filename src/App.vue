@@ -40,7 +40,7 @@
 import Home from './components/content/Home'
 import Movie from './components/content/Movie'
 import Footer from './components/Footer'
-import config from './config'
+import config from './const/config'
 
 export default {
   components: {

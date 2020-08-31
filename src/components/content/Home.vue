@@ -10,15 +10,15 @@
             <v-container fluid>
               <v-row>
                 <v-col
-                  v-for="n in 18"
-                  :key="n"
+                  v-for="img in img.list"
+                  :key="img"
                   class="d-flex child-flex"
                   cols="4"
                 >
-                  <v-card flat tile class="d-flex">
+                  <v-card flat tile class="d-flex" v-on:click="show(img.url)">
                     <v-img
-                      :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                      :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                      :src="img.url"
+                      :lazy-src="img.url"
                       aspect-ratio="1"
                       class="grey lighten-2"
                     >
@@ -38,19 +38,21 @@
             </v-container>
           </v-card>
 
-          <button v-on:click="show" class="button">show!</button>
-          <modal name="hello-world" 
-            :maxWidth="3000"
-            :maxHeight="3000"
+          <modal name="img-modal"
+            :adaptive="true"
+            :maxWidth="600"
+            :maxHeight="600"
+            :height="600"
             :draggable="false"
             :resizable="false">
             <div class="modal-header">
-              <h2>Modal title</h2>
+              <button v-on:click="hide">×</button>
             </div>
             <div class="modal-body">
-              <img src="http://up.gc-img.net/post_img/2014/01/WzyQNqaspyT33CI_MINaP_33.jpeg" />
-              <p>you're reading this text in a modal!</p>
-              <button v-on:click="hide">閉じる</button>
+              <v-img
+                class="modal-img"
+                :src="url"
+                :lazy-src="url"/>
             </div>  
           </modal>
 
@@ -61,13 +63,20 @@
 </template>
 
 <script>
+import img from '../../const/img'
+
 export default {
+  data: () => ({
+    img: img,
+    url: '',
+  }),
   methods: {
-    show : function() {
-      this.$modal.show('hello-world');
+    show : function(url) {
+      this.url = url
+      this.$modal.show('img-modal');
     },
     hide : function () {
-      this.$modal.hide('hello-world');
+      this.$modal.hide('img-modal');
     },
   },
 }
@@ -79,5 +88,9 @@ export default {
 }
 .modal-header {
   border-bottom: 1px solid #ddd;
+}
+.modal-img {
+  width:  100%;
+  height: 100%;
 }
 </style>
